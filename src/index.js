@@ -16,13 +16,14 @@ axios.interceptors.request.use((request)=>{
     console.log(error);
     return Promise.reject(error);
 }));
-axios.interceptors.request.use((response)=>{
+var myInterceptor=axios.interceptors.request.use((response)=>{
     console.log(response);
     return response;
 }, (error => {
     console.log(error);
     return Promise.reject(error);
 }));
+axios.interceptors.request.eject(myInterceptor);//to stop the interceptor
 
 ReactDOM.render( <App/>, document.getElementById( 'root' ) );
 registerServiceWorker();
