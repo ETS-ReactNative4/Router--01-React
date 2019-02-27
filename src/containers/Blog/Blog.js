@@ -9,9 +9,10 @@ class Blog extends Component {
     state={
         posts:[],
         selectedPostId:null,
+        error:false,
     };
     componentDidMount() {
-        axios.get('https://my-json-server.typicode.com/typicode/demo/posts')
+        axios.get('/posts')
             .then((response)=>{
                 //const posts=response.data.slice(0, 4);
                 const posts=response.data;
@@ -23,8 +24,9 @@ class Blog extends Component {
                 });
                 this.setState({posts:updatedPost});
                 console.log(response)
-                console.log(updatedPost)
-            });
+            }).catch((err)=>{
+                this.setState({error:true});
+        });
     }
 
     postSelectedHandler(id){
@@ -32,12 +34,19 @@ class Blog extends Component {
     }
 
     render () {
-        const posts=this.state.posts.map((post)=>{
+
+        let posts=this.state.posts.map((post)=>{
                     return <Post key={post.id}
                                  title={post.title}
                                  author={post.author}
                                  clicked={()=>{this.postSelectedHandler(post.id)}}/>
         });
+
+        if(this.state.error)
+        {
+            posts=<p>Something went wrong Aman ! </p>;
+        }
+
         return (
             <div>
                 <section className="Posts">
