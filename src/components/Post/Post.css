@@ -12,6 +12,7 @@
 .Post:hover,
 .Post:active {
     background-color: #C0DDF5;
+    cursor: pointer;
 }
 
 .Author {

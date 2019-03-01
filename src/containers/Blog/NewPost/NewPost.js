@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 //import axios from 'axios'
-import axios from '../../axios';
+import axios from '../../../axios';
 
 import './NewPost.css';
 
@@ -10,6 +10,10 @@ class NewPost extends Component {
         content: '',
         author: 'Aman'
     }
+    componentDidMount() {
+        console.log(this.props);
+    }
+
     postDataHandler=()=>{
         const post={
             title:this.state.title,

@@ -16,7 +16,7 @@ axios.interceptors.request.use((request)=>{
     console.log(error);
     return Promise.reject(error);
 }));
-var myInterceptor=axios.interceptors.request.use((response)=>{
+var myInterceptor=axios.interceptors.response.use((response)=>{
     console.log(response);
     return response;
 }, (error => {
