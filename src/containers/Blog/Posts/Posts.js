@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import './Posts.css'
 import axios from '../../../axios';
 import Post from '../../../components/Post/Post';
-import {withRouter} from "react-router-dom";
+import {withRouter, Route, Link} from "react-router-dom";
+import FullPost from "../FullPost/FullPost";
 
 
 class Posts extends Component{
@@ -11,7 +12,7 @@ class Posts extends Component{
     }
 
     componentDidMount() {
-        console.log(this.props)
+        //console.log(this.props)
         axios.get('/posts')
             .then((response)=>{
                 //const posts=response.data.slice(0, 4);
@@ -25,18 +26,24 @@ class Posts extends Component{
                 this.setState({posts:updatedPost});
                 console.log(response)
             }).catch((err)=>{console.log(err)});
+
     }
 
     postSelectedHandler=(id)=>{
-        this.setState({selectedPostId:id});
+        console.log(this.props);
+        this.props.history.push({pathname:this.props.match.url+'/'+id}); //To programmacially load component with <Link>
+        //this.props.history.push(`/${id}`);
     }
 
     render(){
         let posts=this.state.posts.map((post)=>{
-            return <Post key={post.id}
-                         title={post.title}
-                         author={post.author}
-                         clicked={()=>{this.postSelectedHandler(post.id)}}/>
+            return (//<Link to={'/posts/'+post.id} key={post.id}>
+                         <Post title={post.title}
+                               author={post.author}
+                               key={post.id}
+                               clicked={()=>{this.postSelectedHandler(post.id)}}/>
+                   // </Link>
+            );
         });
 
         if(this.state.error)
@@ -44,9 +51,12 @@ class Posts extends Component{
             posts=<p>Something went wrong Aman ! </p>;
         }
         return(
-            <section className="Posts">
-                {posts}
-            </section>
+                <div>
+                    <section className="Posts">
+                        {posts}
+                    </section>
+                    <Route path={this.props.match.url+'/:id'} exact component={FullPost}/>
+                </div>
         )
     }
 }
