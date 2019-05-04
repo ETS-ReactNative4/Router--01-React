@@ -40,7 +40,7 @@ class Blog extends Component {
                 <Switch>
                     {this.state.authenticated? <Route path="/new-post" exact component={AsynNewPost}/>:null}
 
-                    <Route path="/posts"  component={Posts}/>
+                    <Route path="/posts"  component={Posts}/> {/*<NavLink> pushes the address in "to="/posts"" to the address bar and <Route> loosa for the address in its "path="/posts"" in the address bar if it matches then <Route> loads its exact defined component from "component={}"*/}
                     <Redirect from="/" to="/posts" /> {/*Can work as guard for not found and not authenticated paths*/}
                     {/*<Route render={()=><h1>Not Found</h1>}/> */}{/*Can also work as guard for not found and not authenticated paths*/}
                     {/*<Route path="/" exact component={Posts}/>*/}
